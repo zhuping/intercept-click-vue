@@ -10,3 +10,7 @@ Vue.use(Intercept, (e, contexts, index, eventType) => {
     ...
 });
 ```
+
+### Inspiration
+
+* [link](https://www.zhihu.com/question/290066361/answer/486336434)
