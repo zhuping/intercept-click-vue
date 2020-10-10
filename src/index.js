@@ -9,6 +9,23 @@ const Intercept = {
       const context = this
       const args = arguments
 
+      // 忽略被过滤的元素 `data-intercept`
+      const els = captureContexts.map(context => context.$el)
+      let currentEl = args[0].target
+      while(currentEl) {
+        if (currentEl.dataset && currentEl.dataset.intercept === 'stop') {
+          return fn.apply(context, args)
+        }
+        
+        const index = els.indexOf(currentEl)
+
+        // 只查询到组件根节点为止，不再继续往上查询
+        if (index > -1) {
+          break
+        }
+        currentEl = currentEl.parentNode
+      }
+
       if (timer) {
         clearTimeout(timer)
         args[0].stopImmediatePropagation();
